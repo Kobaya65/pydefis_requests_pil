@@ -1,7 +1,9 @@
 """Challenges from https://pydefis.callicode.fr Part 2
+2025-07-22 : non résolu
 """
 import random
 from time import sleep
+from unittest import result
 
 import requests
 from PIL import Image
@@ -22,6 +24,8 @@ def compter_les_etoiles_chaudes() -> None:
                 nb_hot_stars += 1
 
     print("Resultat ", nb_hot_stars)
+
+
 def portrait_colore() -> None:
     """https://pydefis.callicode.fr/defis/LePortraitColore/txt"""
     fichier = "./portrait_colore/portrait.png"
@@ -286,5 +290,96 @@ def balade_sur_un_echiquier() -> None:
     print(f"Résultat = {retour.content.decode("utf-8")}")
 
 
+def le_retourneur_de_temps() -> None:
+    """https://pydefis.callicode.fr/defis/RetourneurTemps/txt"""
+    minutes = max_minutes = 0
+    for nb_tours in range(1, 101):
+        somme_minutes = 0
+        for mi in str(minutes):
+            somme_minutes += int(mi)
+
+        if (somme_minutes // 7) == (somme_minutes / 7) and minutes != 0:
+            minutes -= 7
+        else:
+            minutes += 2
+
+        max_minutes = max(max_minutes, minutes)
+        print(f"{nb_tours:>3} {minutes:>4} {max_minutes:>4}")
+
+
+def vous_parlez_fourchelangue() -> None:
+    """https://pydefis.callicode.fr/defis/Fourchelangue/txt"""
+    dico = {
+        "HFH": "A",
+        "FFH": "B",
+        "SHS": "C",
+        "SHH": "D",
+        "SSH": "E",
+        "FHF": "F",
+        "FSS": "G",
+        "HFF": "H",
+        "HHH": "I/J",
+        "SFS": "K",
+        "FFS": "L",
+        "FHS": "M",
+        "SSF": "N",
+        "FHH": "O",
+        "HHF": "P",
+        "SFF": "Q",
+        "FSF": "R",
+        "FSH": "S",
+        "HHS": "T",
+        "FFF": "U/V",
+        "SSS": "W",
+        "HFS": "X",
+        "SHF": "Y",
+        "SFH": "Z",
+    }
+    entree = "FHSFHHSSFHSSHSHFFSSHFSFHSSSFHFHFSSFFFHHHSSFHHHHSSHHSSHFHSHFHHHHSSFHSSSHFSHHHSHSFFFSSFHSFSSFSFHFHSSFSHHHSHHHFHHFFFFSFHSHHFFHHFFFFSFHSSSFF\
+HHFFFFSHHSSHSHFHFSFHSSSFFHHFFFFSHHSHFHFFSFFSFHHSSFFSHHSSSHSSFFHFHHHSSFHSHHFFHHFFFFFFFHHHHHFSFHSSSFFHHFFFFSHHSFHHSHSSHSFFFHHFSSHFSFHSSHHSSHHSSH\
+SSSHFSHHSHHSFSFFHHHHHFSHHSHHHFSSSSFFHHFFHFFSSSHFSHHSHHSFSFHFHHHHHHSFSFSSHFSHHSSSHHHSHSFFSFHHFSFFSHSFFFFFSSHHSHHSHFFSSHFHHSHHHFHFSFSHHHSHFHFFSH\
+FHFSHHHSFHHFSFHSSSHHHSHSSHSFHHFSFFHSHFHSHSHSSSFSSHHSSSFFHHFFFFSHHSFSSSSHSSFSSHFSFFHHSSFHHSHSHHFFFSFFFFSHHSSSFFHHFFFFSHHSSSFFHHFFFFSHHSFHHSHSSH\
+SFFFHHFSSHFSFFHHSSFFSHHSSHHSSHFSHHSHFHFFFHHSFSFSSHFSH"
+    len_entree = len(entree)
+    message = ""
+    increment = 3
+    pos = 0
+    while pos <= len_entree:
+        syllabe = entree[pos: pos + increment]
+        traduction = dico.get(syllabe, " ")
+        if traduction == " ":
+            pos += 2
+        else:
+            pos += 3
+    
+        message += traduction
+
+    print(f"Résultat = {message}")
+
+
+def entree_au_ministere() -> None:
+    """https://pydefis.callicode.fr/defis/CodeCabine/txt
+    """
+    entree = 64225
+    compare = ["1", "2", "4", "6", "7"]
+    prochains_chiffres = []
+    while len(prochains_chiffres) < 3:
+        chiffres = []
+        carre = entree ** 2
+        carre_str = str(carre)
+        for l in carre_str:
+            if l not in chiffres:
+                chiffres.append(l)
+        chiffres.sort()
+
+        if chiffres == compare:
+            prochains_chiffres.append(entree)
+            print(f"{entree:>5} {carre:>12} {chiffres}")
+
+        entree += 1
+
+    print(f"Résultat = {prochains_chiffres[0]}, {prochains_chiffres[1]}, {prochains_chiffres[2]}")
+
+
 if __name__ == "__main__":
-    compter_les_etoiles_chaudes()
+    entree_au_ministere()
