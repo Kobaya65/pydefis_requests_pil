@@ -381,5 +381,33 @@ def entree_au_ministere() -> None:
     print(f"Résultat = {prochains_chiffres[0]}, {prochains_chiffres[1]}, {prochains_chiffres[2]}")
 
 
+def parametrage_du_vif_d_or() -> None:
+    """https://pydefis.callicode.fr/defis/TrajetVifOr/txt
+    (y, z, (x + y + z) % n)
+    """
+    nominal = [0, 0, 1]
+    solutions = {}
+    for n in range(2, 201):
+        position = nominal.copy()
+        nb_coups = 0
+        exit_loop = True
+        while exit_loop:
+            x = position[0]
+            y = position[1]
+            z = position[2]
+
+            position[0] = y
+            position[1] = z
+            position[2] = (x + y + z) % n
+            nb_coups += 1
+            if position == nominal:
+                solutions[n] = nb_coups
+                exit_loop = False
+
+    tries = sorted(solutions.items(), key=lambda x: x[1], reverse=True)
+    for x in tries[:10]:
+        print(f"{x[0]},", end="")
+
+
 if __name__ == "__main__":
-    entree_au_ministere()
+    parametrage_du_vif_d_or()
