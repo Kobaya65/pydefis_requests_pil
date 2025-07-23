@@ -3,7 +3,6 @@
 """
 import random
 from time import sleep
-from unittest import result
 
 import requests
 from PIL import Image
@@ -351,7 +350,7 @@ SFFFHHFSSHFSFFHHSSFFSHHSSHHSSHFSHHSHFHFFFHHSFSFSSHFSH"
             pos += 2
         else:
             pos += 3
-    
+
         message += traduction
 
     print(f"Résultat = {message}")
@@ -409,5 +408,52 @@ def parametrage_du_vif_d_or() -> None:
         print(f"{x[0]},", end="")
 
 
+def l_echarpe_de_mme_weasley() -> None:
+    """https://pydefis.callicode.fr/defis/EcharpeWeasley/txt"""
+    def traitement(carre: Image.Image) -> None:
+        """Get numbers of different colors in this area of the image.
+        Args:
+            carre (Image.Image): part of the image (8 * 8 pixels)
+        Returns:
+            _type_: number of colors minu s1
+        """
+        couleurs = []
+        for x1 in range(8):
+            for y1 in range(8):
+                r, g, b = carre.getpixel((x1, y1))
+                couleur = r * 65536 + g * 256 + b
+                if couleur not in couleurs:
+                    couleurs.append(couleur)
+
+        return len(couleurs) - 1
+
+    # rgb_img = Image.open('./l_echarpe_de_mme_weasley/message_echarpe.png')
+    rgb_img = Image.open('./l_echarpe_de_mme_weasley/message_echarpe_exemple.png')
+
+    largeur = rgb_img.width
+    hauteur = rgb_img.height
+    column, row = int(largeur / 8), int(hauteur / 8)
+    result = [["__" for _ in range(column)] for _ in range(row)]
+
+    # browse pixels
+    for x in range(0, largeur, 8):
+        for y in range(0, hauteur, 8):
+            carre = rgb_img.crop((x, y, x + 8, y + 8))
+            num = traitement(carre)
+            result[y // 8][x // 8] = num
+
+    str_1_2 = str_2_1 = ""
+    # read message
+    for x in range(0, int(largeur / 8), 2):
+        for y in range(int(hauteur / 8)):
+            octet1 = result[y][x]
+            octet2 = result[y][x + 1]
+            str_2_1 += f"{chr(octet2 * 16 + octet1)}"
+            str_1_2 += f"{chr(octet1 * 16 + octet2)}"
+
+    print(str_1_2)
+    print(str_2_1)
+
+
 if __name__ == "__main__":
-    parametrage_du_vif_d_or()
+    l_echarpe_de_mme_weasley()
