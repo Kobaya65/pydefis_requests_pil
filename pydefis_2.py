@@ -5,9 +5,7 @@ from time import sleep
 
 import pandas as pd
 import requests
-from PIL import Image
-import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle
+from PIL import Image, ImageDraw
 
 
 def compter_les_etoiles_chaudes() -> None:
@@ -130,7 +128,7 @@ def carte_du_marauder() -> None:
         profondeurs = [[100.0] * hauteur for _ in range(largeur)]
         prof_min = 100.0
 
-        return minimums(profondeurs, prof_min)
+        return (profondeurs, prof_min)
 
     url_get = "https://pydefis.callicode.fr/defis/C24_Mimas/get/Kobaya/a1f1c"
     url_post = "https://pydefis.callicode.fr/defis/C24_Mimas/post/Kobaya/a1f1c"
@@ -459,23 +457,29 @@ def le_rayon_carre_des_daleks() -> None:
     """https://pydefis.callicode.fr/defis/C23_RayonCarre/txt"""
     data = pd.read_csv(filepath_or_buffer="./le_rayon_carre_des_daleks/entree.csv", delimiter=",", names=["x", "y", "largeur","hauteur"])
 
-    x_fix = min(data[:, 0])
-    y_fix = min(data[:, 1])
+    data.iloc[:, 0] = data.iloc[:, 0] + 1000
+    data.iloc[:, 1] = data.iloc[:, 1] + 1000
+    # create blank image (canvas)
+    image = Image.new('RGB', (2000, 2000), 'white')
+    # create a drawing object
+    drawing_object = ImageDraw.Draw(image)
+    # draw rectangles
+    for rect in data.itertuples():
+        x = rect.x - (rect.largeur / 2)
+        y = rect.y - (rect.largeur / 2)
+        x1 = rect.x + (rect.largeur / 2)
+        y1 = rect.y + (rect.largeur / 2)
+        drawing_object.rectangle( (x, y, x1, y1), fill=(0, 255, 0), outline=None)
 
-    image = Image.new('RGB', (1200, 1200), 'white')
+    image.save(fp="./le_rayon_carre_des_daleks/image_vert_perso.png")
+    surface = 0
+    for x in range(image.width):
+        for y in range(image.height):
+            couleur = image.getpixel((x, y))
+            if couleur == (0, 255, 0):
+                surface += 1
 
-    # Créer une figure et un axe
-    _, ax = plt.subplots()
-
-    for coord in data.itertuples():
-        # Ajouter un rectangle
-        x = coord.x - (coord.largeur / 2)
-        y = coord.y - (coord.hauteur / 2)
-        ax.add_patch(Rectangle((x, y), coord.largeur, coord.hauteur, fill=True, edgecolor='red', lw=0))
-
-        # Afficher l'image
-        ax.imshow(image)
-        plt.show()
+    print(f"Résultat = {surface}")
 
 
 if __name__ == "__main__":
