@@ -1,11 +1,13 @@
 """Challenges from https://pydefis.callicode.fr Part 2
-2025-07-22 : non résolu
 """
 import random
 from time import sleep
 
+import pandas as pd
 import requests
 from PIL import Image
+import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
 
 
 def compter_les_etoiles_chaudes() -> None:
@@ -427,8 +429,7 @@ def l_echarpe_de_mme_weasley() -> None:
 
         return len(couleurs) - 1
 
-    # rgb_img = Image.open('./l_echarpe_de_mme_weasley/message_echarpe.png')
-    rgb_img = Image.open('./l_echarpe_de_mme_weasley/message_echarpe_exemple.png')
+    rgb_img = Image.open('./l_echarpe_de_mme_weasley/message_echarpe.png')
 
     largeur = rgb_img.width
     hauteur = rgb_img.height
@@ -442,18 +443,40 @@ def l_echarpe_de_mme_weasley() -> None:
             num = traitement(carre)
             result[y // 8][x // 8] = num
 
-    str_1_2 = str_2_1 = ""
+    res = ""
     # read message
-    for x in range(0, int(largeur / 8), 2):
-        for y in range(int(hauteur / 8)):
+    for x in range(int(largeur / 8)):
+        for y in range(0, int(hauteur / 8), 2):
             octet1 = result[y][x]
-            octet2 = result[y][x + 1]
-            str_2_1 += f"{chr(octet2 * 16 + octet1)}"
-            str_1_2 += f"{chr(octet1 * 16 + octet2)}"
+            octet2 = result[y + 1][x]
+            chaine = f"{hex(octet1)}{hex(octet2)[2:]}"
+            res += chr(int(chaine[2:], 16))
 
-    print(str_1_2)
-    print(str_2_1)
+    print(f"Résultat = {res}")
+
+
+def le_rayon_carre_des_daleks() -> None:
+    """https://pydefis.callicode.fr/defis/C23_RayonCarre/txt"""
+    data = pd.read_csv(filepath_or_buffer="./le_rayon_carre_des_daleks/entree.csv", delimiter=",", names=["x", "y", "largeur","hauteur"])
+
+    x_fix = min(data[:, 0])
+    y_fix = min(data[:, 1])
+
+    image = Image.new('RGB', (1200, 1200), 'white')
+
+    # Créer une figure et un axe
+    _, ax = plt.subplots()
+
+    for coord in data.itertuples():
+        # Ajouter un rectangle
+        x = coord.x - (coord.largeur / 2)
+        y = coord.y - (coord.hauteur / 2)
+        ax.add_patch(Rectangle((x, y), coord.largeur, coord.hauteur, fill=True, edgecolor='red', lw=0))
+
+        # Afficher l'image
+        ax.imshow(image)
+        plt.show()
 
 
 if __name__ == "__main__":
-    l_echarpe_de_mme_weasley()
+    le_rayon_carre_des_daleks()
