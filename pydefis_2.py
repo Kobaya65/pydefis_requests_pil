@@ -454,7 +454,9 @@ def l_echarpe_de_mme_weasley() -> None:
 
 
 def le_rayon_carre_des_daleks() -> None:
-    """https://pydefis.callicode.fr/defis/C23_RayonCarre/txt"""
+    """https://pydefis.callicode.fr/defis/C23_RayonCarre/txt
+    20250724 : non résolu
+    """
     data = pd.read_csv(filepath_or_buffer="./le_rayon_carre_des_daleks/entree.csv", delimiter=",", names=["x", "y", "largeur","hauteur"])
 
     data.iloc[:, 0] = data.iloc[:, 0] + 1000
@@ -482,5 +484,60 @@ def le_rayon_carre_des_daleks() -> None:
     print(f"Résultat = {surface}")
 
 
+def la_paranoia_de_calot() -> None:
+    """https://pydefis.callicode.fr/defis/ParanoiaCalot/txt"""
+    def decode(x: str, i: int) -> str:
+        """_summary_
+        Args:
+            x (str): character to be decrypted
+            i (int): shift value
+        Returns:
+            str: decrypted character
+        """
+        line = 0
+        position = -1
+        decyphered = ""
+        while decyphered == "":
+            if x in clavier[line]:
+                position = clavier[line].index(x)
+            if position > -1:
+                new_pos = (position + i) % 10
+                decyphered = clavier[line][new_pos]
+            line += 1
+
+        return decyphered
+
+    def browse_text(i: int) -> str:
+        """Browse texte
+        Args:
+            i (int): shift value
+        Returns:
+            str: decrypted text
+        """
+        decyphered_text = ""
+        for x in texte:
+            if x != "\n":
+                decyphered_text += decode(x, i)
+            else:
+                decyphered_text += "\n"
+
+        return decyphered_text
+
+
+    clavier = [
+        ["a", "z", "e", "r", "t", "y", "u", "i", "o", "p"],
+        ["q", "s", "d", "f", "g", "h", "j", "k", "l", "m"],
+        ["w", "x", "c", "v", "b", "n", ",", ";", ":", "!"],
+    ]
+    with open(file="./la_paranoia_de_calot/texte.txt", mode="r", encoding="utf-8") as f:
+        texte = f.read()
+
+
+    for i in range(-9, 10):
+        print(f"i={i}")
+        print(browse_text(i))
+
+
+
 if __name__ == "__main__":
-    le_rayon_carre_des_daleks()
+    la_paranoia_de_calot()
