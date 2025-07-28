@@ -537,7 +537,38 @@ def la_paranoia_de_calot() -> None:
         print(f"i={i}")
         print(browse_text(i))
 
+def gestion_espace_temps_par_le_tardis() -> None:
+    """https://pydefis.callicode.fr/defis/C23_TardisFirmware10/txt"""
+    img = Image.open('./gestion_espace_temps_par_le_tardis/tardis_machine_02.png')
+    pile = []
+    nombres = []
+    annee = 0
+    for y in range(0, img.height, 20):
+        for x in range(0, img.width, 20):
+            r, g, b = img.getpixel((x, y))
+            if r == 0 and g == 0 and b == 0:
+                print("Rien à faire...")
+            elif g == 0 and b == 0 and r > 0:
+                pile.append(r)
+            elif r == 0 and g == 0 and b in [230, 240]:
+                un = pile.pop()
+                deux = pile.pop()
+                if b == 230:
+                    pile.append((un + deux) % 256)
+                elif b == 240:
+                    pile.append((un * deux) % 256)
+                else:
+                    print("b != 230 et 230")
+            elif r == 200 and g == 200 and b == 200:
+                nombres.append(pile[len(pile) - 1])
+                if len(nombres) == 2:
+                    annee += (256 * nombres[0] + nombres[1] - 10000)
+                    nombres.clear()
+            else:
+                print("combinaison inconnue !")
 
+    print(f"annee = {annee}")
+            
 
 if __name__ == "__main__":
-    la_paranoia_de_calot()
+    gestion_espace_temps_par_le_tardis()
