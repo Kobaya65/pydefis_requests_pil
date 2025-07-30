@@ -2,6 +2,8 @@
 """
 import random
 from time import sleep
+from zipfile import ZipFile
+from glob import glob
 
 import pandas as pd
 import requests
@@ -570,5 +572,48 @@ def gestion_espace_temps_par_le_tardis() -> None:
     print(f"annee = {annee}")
             
 
+def un_message_des_etoiles() -> None:
+    """https://pydefis.callicode.fr/defis/C25_SkyMap01/txt"""
+    my_zip_file = "./un_message_des_etoiles_1/telescope01.zip"
+    destination_folder = "./un_message_des_etoiles_1"
+    
+    with ZipFile(my_zip_file, 'r') as zip_ref:
+        zip_ref.extractall(destination_folder)
+
+    # create a new blank image
+    img_result = Image.new(mode="RGB", size=(800, 800))
+    pixels_result = img_result.load()
+
+    fichiers = glob("./un_message_des_etoiles_1/telescope_img_*.png")
+    lon = len(fichiers)
+
+    # first image set as reference
+    image_ref = Image.open(fichiers[0]) 
+    tab_ref = list(image_ref.getdata())
+
+    nb_pixels_diffents = 0
+    for i in range(1, lon):
+        print(f"image {i}")
+        img = Image.open(fichiers[i])
+        tab_i = list(img.getdata())
+
+        if tab_ref != tab_i:
+            for idx in range(640000):
+                if tab_ref[idx] != tab_i[idx]:
+                    y = idx % 800
+                    x = idx // 800
+                    pixels_result[x, y] = (255, 255, 255)
+                    nb_pixels_diffents += 1
+
+        img.close()
+
+    image_ref.close()
+
+    print(f"Nombre de pixeles différents : {nb_pixels_diffents}")
+    img_result.save("./un_message_des_etoiles_1/img_result.png")
+    img_result.show()
+    img_result.close()
+
+
 if __name__ == "__main__":
-    gestion_espace_temps_par_le_tardis()
+    un_message_des_etoiles()
