@@ -4,6 +4,7 @@ import random
 from time import sleep
 from zipfile import ZipFile
 from glob import glob
+import unidecode
 
 import pandas as pd
 import requests
@@ -615,5 +616,67 @@ def un_message_des_etoiles() -> None:
     img_result.close()
 
 
+def sw_v_le_message_chiffre_de_vader() -> None:
+    """https://pydefis.callicode.fr/defis/ChiffreVader/txt"""
+    def letter_to_figure(lettre: str) -> int:
+        if lettre == "_":
+            val = 26
+        else:
+            val = ord(lettre) - 65
+        return val
+
+    def figure_to_letter(chiffre: int) -> str:
+        if chiffre == 26:
+            ret = "_"
+        else:
+            ret = chr(chiffre + 65)
+        return ret
+
+    def to_figures(texte: str) -> list[int]:
+        longeur = len(texte)
+        liste_chiffres = []
+        for i in range(0, longeur, 2):
+            x = texte[i]
+            y = texte[i + 1]
+            liste_chiffres.append(letter_to_figure(x))
+            liste_chiffres.append(letter_to_figure(y))
+
+        return liste_chiffres
+
+    def transform_figures(a: int, b: int, c: int, d: int, liste_chiffres: list[int]) -> list[str]:
+        # x' = (a x + b y) % 27
+        # y' = (c x + d y) % 27
+        liste_codee = []
+        for idx in range(0, len(liste_chiffres), 2):
+            x = liste_chiffres[idx]
+            y = liste_chiffres[idx + 1]
+
+            liste_codee.append((a * x + b * y) % 27)
+            liste_codee.append((c * x + d * y) % 27)
+
+        result = []
+        for x in liste_codee:
+            result.append(figure_to_letter(x))
+
+        return result
+
+
+    entree = "GBZNQMMUXWCWSEWO" #"Je suis ton père"
+    a = -10
+    b = -12
+    c = -7
+    d = -8
+    cleaned = unidecode.unidecode(entree)
+    cap_cleaned = cleaned.upper()
+    cap_cleaned = cap_cleaned.replace(" ", "_")
+    print(cap_cleaned)
+    if (len(cap_cleaned) % 2) != 0:
+        cap_cleaned += "_"
+
+    result = to_figures(cap_cleaned)
+    encoded = transform_figures(a, b, c, d, result)
+    print("".join(encoded))
+
+
 if __name__ == "__main__":
-    un_message_des_etoiles()
+    sw_v_le_message_chiffre_de_vader()
