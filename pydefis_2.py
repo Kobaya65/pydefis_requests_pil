@@ -707,5 +707,48 @@ def sa_legende_est_son_anagramme_2() -> None:
         print(dico_resultat[x]["nb_légendes"], dico_resultat[x]["nom"])
 
 
+def sw_v_joue_avec_yoda() -> None:
+    """https://pydefis.callicode.fr/defis/JeuYoda/txt"""
+    entree = "sassai eaux-de-vie cessaient acerbité eaux sceau tiendra hasard acéphale auxiliairement vesce eurafricaine hâtai saignant entachassent alentie césar vieillerie messéant taillable ives testacé dracéna ardentes ensablant blessas entachasses ioniens antarctique sessiles ineffaçables quercitrine besace lessivasses acerbes descellaient entachas lessive gestation lessivâtes antécédentes énamourâmes antécédent entachât inefficace testacelles sarabandes entachant rieur itérâmes antécédences messages sesquioxydes testacés"
+
+    liste_mots = entree.split()
+    nb_mots = len(liste_mots)
+    mots_tries = []
+    while len(mots_tries) != nb_mots:
+        idx_init = 0
+        copie_mots = liste_mots.copy()
+        mot = copie_mots[idx_init]
+        print(f"{idx_init / nb_mots:0.1%} {mot}")
+        mots_tries = []
+        while len(copie_mots):
+            mot = copie_mots[idx_init]
+            copie_mots.remove(mot)
+
+            mots_tries.append(mot)
+            fin = mot[-3:]
+            idx_copie = 0
+            try:
+                while len(mots_tries) < nb_mots:
+                    debut = copie_mots[idx_copie][:3]
+                    if debut == fin:
+                        mots_tries.append(copie_mots[idx_copie])
+                        # new end of word to search for
+                        fin = copie_mots[idx_copie][-3:]
+                        copie_mots.remove(copie_mots[idx_copie])
+                        idx_copie = 0
+                    else:
+                        idx_copie += 1
+            except IndexError:
+                idx_init += 1
+                break
+    
+    liste = ""
+    for x in mots_tries:
+        liste += f"\"{x}\", "
+
+    liste = liste[:-2]
+    print(liste)
+
+
 if __name__ == "__main__":
-    sa_legende_est_son_anagramme_2()
+    sw_v_joue_avec_yoda()
