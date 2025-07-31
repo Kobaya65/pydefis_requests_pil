@@ -669,7 +669,43 @@ def sw_v_le_message_chiffre_de_vader() -> None:
                     resultat = "".join(transform_figures((a, b, c, d), result))
                     if "VADER" in resultat:
                         print(resultat)
-    
+
+
+def sa_legende_est_son_anagramme_2() -> None:
+    """https://pydefis.callicode.fr/defis/NomAnagramme1/txt"""
+    with open(file="./sa_legende_est_son_anagramme_2/texte.txt", mode="r", encoding="utf-8") as f:
+        noms = f.readlines()
+
+    dico_resultat = {}
+
+    for n in noms:
+        nom_cleaned = n[:-1]
+        # get rid of accent and final newline
+        nom = unidecode.unidecode(nom_cleaned)
+        # get rid of spaces
+        nom = nom.replace(" ", "").lower()
+        nom = sorted(nom)
+        compil = "".join(nom)
+        if dico_resultat.get(compil):
+            liste_noms = dico_resultat[compil]["nom"]
+            liste_noms.append(nom_cleaned)
+            dico_resultat[compil] = {
+                "nom": liste_noms,
+                "nb_légendes": int(dico_resultat[compil]["nb_légendes"]) + 1
+            }
+        else:
+            dico_resultat[compil] = {
+                "nom": [nom_cleaned],
+                "nb_légendes": 1
+            }
+
+    # sort dico by its values
+    dico_resultat = dict(sorted(dico_resultat.items(), key=lambda x: x[1]["nb_légendes"], reverse=True))
+
+    # first_value = next(iter(my_dict.values()))
+    for x in dico_resultat:
+        print(dico_resultat[x]["nb_légendes"], dico_resultat[x]["nom"])
+
 
 if __name__ == "__main__":
-    sw_v_le_message_chiffre_de_vader()
+    sa_legende_est_son_anagramme_2()
