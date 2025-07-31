@@ -643,7 +643,8 @@ def sw_v_le_message_chiffre_de_vader() -> None:
 
         return liste_chiffres
 
-    def transform_figures(a: int, b: int, c: int, d: int, liste_chiffres: list[int]) -> list[str]:
+    def transform_figures(coeff: tuple[int], liste_chiffres: list[int]) -> list[str]:
+        a, b, c, d = coeff
         # x' = (a x + b y) % 27
         # y' = (c x + d y) % 27
         liste_codee = []
@@ -660,12 +661,10 @@ def sw_v_le_message_chiffre_de_vader() -> None:
 
         return result
 
-
-    entree = "GBZNQMMUXWCWSEWO" #"Je suis ton père"
-    a = -10
-    b = -12
-    c = -7
-    d = -8
+    entree = "Je suis ton père"
+    coeff = (2, -3, 5, -11)
+    # entree = "GBZNQMMUXWCWSEWO"
+    # coeff = (-10, -12, -7, -8)
     cleaned = unidecode.unidecode(entree)
     cap_cleaned = cleaned.upper()
     cap_cleaned = cap_cleaned.replace(" ", "_")
@@ -674,7 +673,7 @@ def sw_v_le_message_chiffre_de_vader() -> None:
         cap_cleaned += "_"
 
     result = to_figures(cap_cleaned)
-    encoded = transform_figures(a, b, c, d, result)
+    encoded = transform_figures(coeff, result)
     print("".join(encoded))
 
 
