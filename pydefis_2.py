@@ -633,7 +633,7 @@ def sw_v_le_message_chiffre_de_vader() -> None:
         return ret
 
     def to_figures(texte: str) -> list[int]:
-        longeur = len(texte)
+        longeur = len(texte) - 1
         liste_chiffres = []
         for i in range(0, longeur, 2):
             x = texte[i]
@@ -645,8 +645,6 @@ def sw_v_le_message_chiffre_de_vader() -> None:
 
     def transform_figures(coeff: tuple[int], liste_chiffres: list[int]) -> list[str]:
         a, b, c, d = coeff
-        # x' = (a x + b y) % 27
-        # y' = (c x + d y) % 27
         liste_codee = []
         for idx in range(0, len(liste_chiffres), 2):
             x = liste_chiffres[idx]
@@ -661,21 +659,17 @@ def sw_v_le_message_chiffre_de_vader() -> None:
 
         return result
 
-    entree = "Je suis ton père"
-    coeff = (2, -3, 5, -11)
-    # entree = "GBZNQMMUXWCWSEWO"
-    # coeff = (-10, -12, -7, -8)
-    cleaned = unidecode.unidecode(entree)
-    cap_cleaned = cleaned.upper()
-    cap_cleaned = cap_cleaned.replace(" ", "_")
-    print(cap_cleaned)
-    if (len(cap_cleaned) % 2) != 0:
-        cap_cleaned += "_"
+    entree = "MPLCCFOMNFXGUDOUG_CFED_ANFXPHGLXB_HTOSYKG_KRMWG_PUXJMWCFQAUMZP_WIAKERYWXQQJZREZPWMWKSUOSYKOMNFLXIPASBW_NPIEP_EJDBW "
 
-    result = to_figures(cap_cleaned)
-    encoded = transform_figures(coeff, result)
-    print("".join(encoded))
-
+    result = to_figures(entree)
+    for a in range(-20, 21):
+        for b in range(-20, 21):
+            for c in range(-20, 21):
+                for d in range(-20, 21):
+                    resultat = "".join(transform_figures((a, b, c, d), result))
+                    if "VADER" in resultat:
+                        print(resultat)
+    
 
 if __name__ == "__main__":
     sw_v_le_message_chiffre_de_vader()
