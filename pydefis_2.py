@@ -751,6 +751,27 @@ def sw_v_joue_avec_yoda() -> None:
     liste = liste[:-2]
     print(liste)
 
+def sw_iv_il_a_mis_son_mot_de_passe_sur_un_post_it() -> None:
+    """https://pydefis.callicode.fr/defis/LunetteAstro/txt"""
+    x1 = 1694
+    y1 = 1546
+    nb_iterations = 50
+
+    while nb_iterations:
+        x = (x1      + 2 * y1) % 2018
+        y = (-3 * x1 +     y1) % 2018
+
+        x1 = x
+        y1 = y
+
+        nb_iterations -= 1
+
+    declinaison = (x - 900)  / 10
+    ascension_droite = (y / 150) * 2
+
+    print(f"Déclinaison      : {declinaison}")
+    print(f"Ascension droite : {ascension_droite}")
+
 
 if __name__ == "__main__":
-    sw_v_joue_avec_yoda()
+    sw_iv_il_a_mis_son_mot_de_passe_sur_un_post_it()
