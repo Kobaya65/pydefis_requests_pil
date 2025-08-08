@@ -708,7 +708,9 @@ def sa_legende_est_son_anagramme_2() -> None:
 
 
 def sw_v_joue_avec_yoda() -> None:
-    """https://pydefis.callicode.fr/defis/JeuYoda/txt"""
+    """https://pydefis.callicode.fr/defis/JeuYoda/txt
+    20250808 : non résolu
+    """
     entree = "sassai eaux-de-vie cessaient acerbité eaux sceau tiendra hasard acéphale auxiliairement vesce eurafricaine hâtai saignant entachassent alentie césar vieillerie messéant taillable ives testacé dracéna ardentes ensablant blessas entachasses ioniens antarctique sessiles ineffaçables quercitrine besace lessivasses acerbes descellaient entachas lessive gestation lessivâtes antécédentes énamourâmes antécédent entachât inefficace testacelles sarabandes entachant rieur itérâmes antécédences messages sesquioxydes testacés"
 
     liste_mots = entree.split()
