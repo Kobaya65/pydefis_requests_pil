@@ -773,5 +773,20 @@ def sw_iv_il_a_mis_son_mot_de_passe_sur_un_post_it() -> None:
     print(f"Ascension droite : {ascension_droite}")
 
 
+def a_l_assaut_de_gunray() -> None:
+    """https://pydefis.callicode.fr/defis/PorteBlindeeSabre/txt"""
+    epaisseur = 0
+    volume = 0
+    temps = 0
+    # E = 3 - 0.005 x V = 3 cm
+    while epaisseur <= 70:
+        perce = 3 - 0.005 * volume
+        epaisseur += perce
+        volume += 8 * perce
+        temps += 1
+
+        print(f"Temps = {temps}, épaisseur = {epaisseur}")
+
+
 if __name__ == "__main__":
-    sw_iv_il_a_mis_son_mot_de_passe_sur_un_post_it()
+    a_l_assaut_de_gunray()
