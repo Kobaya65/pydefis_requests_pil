@@ -788,5 +788,24 @@ def a_l_assaut_de_gunray() -> None:
         print(f"Temps = {temps}, épaisseur = {epaisseur}")
 
 
+def le_seul_et_unique() -> None:
+    """https://pydefis.callicode.fr/defis/PokePlusRare/txt"""
+    with open("./le_seul_et_unique/donnees.csv") as f:
+        data = f.readlines()
+
+    donnees = dict()
+    for x in data:
+        nom, x, y = x[:-1].split(",")
+        if donnees.get(nom):
+            donnees[nom].append((x, y))
+        else:
+            donnees[nom] = [(x, y)]
+
+    for x in donnees:
+        if len(donnees[x]) == 1:
+            print(f"Résultat = {x}, {donnees[x]}")
+            break
+
+
 if __name__ == "__main__":
-    a_l_assaut_de_gunray()
+    le_seul_et_unique()
