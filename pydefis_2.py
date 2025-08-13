@@ -807,5 +807,19 @@ def le_seul_et_unique() -> None:
             break
 
 
+def piege_numerique_a_pokemon() -> None:
+    """https://pydefis.callicode.fr/defis/PokeNombresCommuns/txt"""
+    resultat = []
+    for i in range(7, 1001):
+        somme = 0
+        for x in str(i):
+            somme += int(x)
+
+        if (i % 7) == 0 and somme == 11:
+            resultat.append(i)
+
+    print(resultat)
+
+
 if __name__ == "__main__":
-    le_seul_et_unique()
+    piege_numerique_a_pokemon()
