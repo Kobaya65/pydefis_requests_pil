@@ -842,7 +842,8 @@ def la_ceinture_d_hippolyte() -> None:
                 partie_gauche.putpixel((x, y), (0, 0, 0))
 
     partie_gauche.show()
-            
+    img.close()
+
 
 if __name__ == "__main__":
     la_ceinture_d_hippolyte()
