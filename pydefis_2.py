@@ -821,5 +821,28 @@ def piege_numerique_a_pokemon() -> None:
     print(resultat)
 
 
+def la_ceinture_d_hippolyte() -> None:
+    """https://pydefis.callicode.fr/defis/Herculito09Ceinture/txt"""
+    img = Image.open('./la_ceinture_d_hippolyte/herculito-ceinture.png')
+    # Récupérer la taille de l'image
+    largeur, hauteur = img.size
+    # Définir la zone pour la moitié gauche
+    box_gauche = (0, 0, largeur // 2, hauteur)
+    # Définir la zone pour la moitié droite
+    box_droite = (largeur // 2, 0, largeur, hauteur)
+    # Découper les deux parties
+    partie_gauche = img.crop(box_gauche)
+    partie_droite = img.crop(box_droite)
+
+    large, haut = partie_droite.size
+    for y in range(haut):
+        for x in range(large):
+            # print(y, x)
+            if partie_gauche.getpixel((x, y)) != partie_droite.getpixel((x, y)):
+                partie_gauche.putpixel((x, y), (0, 0, 0))
+
+    partie_gauche.show()
+            
+
 if __name__ == "__main__":
-    piege_numerique_a_pokemon()
+    la_ceinture_d_hippolyte()
