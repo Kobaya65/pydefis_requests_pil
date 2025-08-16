@@ -845,5 +845,34 @@ def la_ceinture_d_hippolyte() -> None:
     img.close()
 
 
+def le_pistolet_de_nick_fury() -> None:
+    """https://pydefis.callicode.fr/defis/PistoletFury/txt
+    20250816 : non résolu
+    """
+    res = []
+    periodique = []
+    for x in range(1, 501):
+        val = x
+        i = 0
+        res.append(x)
+        while i < 1024:
+            binary = bin(val)[2:]
+            rev = "".join(reversed(binary))
+            dec = int(rev, 2) + 2
+            # print(f"{val} {binary} {rev} {dec} {res}")
+
+            if dec not in res:
+                res.append(dec)
+                val = dec
+            else:
+                res.clear()
+                periodique.append(x)
+                break
+
+            i += 1
+
+    print(periodique)
+
+
 if __name__ == "__main__":
-    la_ceinture_d_hippolyte()
+    le_pistolet_de_nick_fury()
