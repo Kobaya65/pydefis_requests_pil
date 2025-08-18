@@ -917,5 +917,42 @@ def herculito_v_les_ecuries_d_augias() -> None:
     print(f"Résultat = {litres}")
 
 
+def produit_et_somme_palindromiques() -> None:
+    """https://pydefis.callicode.fr/defis/Palindromes/txt"""
+    def palindrome(mult: str, somm: str) -> bool:
+        """Check if mult and somm are palindrom.
+        Args:
+            mult (str): product of a, b, c, d
+            somm (str): sum of a, b, c, d
+        Returns:
+            bool: True if both are palindrom otherwise False
+        """
+        
+        mult_rev = "".join(reversed(mult))
+        somm_rev = "".join(reversed(somm))
+
+        if (mult == mult_rev) and (somm == somm_rev):
+            result = True
+        else:
+            result = False
+
+        return result
+
+    result = []
+    mini = 12
+    maxi = 82
+    for a in range(mini, maxi + 1):
+        for b in range(mini, maxi + 1):
+            for c in range(mini, maxi + 1):
+                for d in range(mini, maxi + 1):
+                    liste = [a, b, c, d]
+                    liste.sort()
+                    if liste not in result:
+                        if palindrome(str(a * b * c * d), str(a + b + c + d)):
+                            result.append(liste)
+
+    print(f"Résultat = {len(result)}")
+
+
 if __name__ == "__main__":
-    herculito_v_les_ecuries_d_augias()
+    produit_et_somme_palindromiques()
