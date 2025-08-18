@@ -837,7 +837,7 @@ def la_ceinture_d_hippolyte() -> None:
     large, haut = partie_droite.size
     for y in range(haut):
         for x in range(large):
-            # print(y, x)
+            # print(y, x)2, 4, 6, 8, 10, 12, 13, 15, 17, 19, 21, 23, 25, 26, 28, 30, 32, 34, 36, 37, 39, 41, 43, 45, 47, 49, 51, 52, 54, 55, 57, 59, 61, 63, 65, 67, 69, 71, 73, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 118, 120, 122, 124, 126, 128, 130, 132, 133, 135, 137, 139, 141, 143, 145, 147, 148, 149, 151, 153, 155, 156, 157, 159, 161, 163, 164, 166, 168, 169, 171, 172, 173, 175, 177, 179, 181, 183, 185, 187, 189, 191, 193, 195, 196, 198, 199, 201, 203, 205, 207, 208, 209, 211, 213, 215, 217, 219, 220, 222, 223, 225, 227, 228, 229, 231, 233, 235, 236, 237, 239, 241, 243, 244, 245, 247, 249, 251, 253, 255, 257, 259, 261, 263, 265, 266, 268, 270, 272, 274, 276, 278, 280, 282, 284, 286, 288, 290, 292, 294, 296, 298, 300, 302, 304, 306, 308, 310, 312, 314, 316, 318, 320, 322, 324, 326, 328, 330, 332, 334, 336, 338, 340, 342, 344, 346, 348, 350, 352, 354, 356, 358, 360, 362, 364, 366, 368, 370, 372, 374, 376, 378, 380, 382, 384, 386, 388, 390, 392, 394, 396, 398, 400, 402, 404, 406, 408, 410, 412, 414, 416, 418, 420, 422, 424, 426, 428, 430, 432, 434, 436, 438, 440, 442, 444, 446, 448, 450, 452, 454, 456, 458, 460, 462, 464, 466, 468, 470, 472, 474, 476, 478, 480, 482, 484, 486, 488, 490, 492, 494, 496, 498, 500
             if partie_gauche.getpixel((x, y)) != partie_droite.getpixel((x, y)):
                 partie_gauche.putpixel((x, y), (0, 0, 0))
 
@@ -874,5 +874,48 @@ def le_pistolet_de_nick_fury() -> None:
     print(periodique)
 
 
+def herculito_v_les_ecuries_d_augias() -> None:
+    """https://pydefis.callicode.fr/defis/Herculito05Ecuries/txt
+    - pour une salle rouge, le nettoyage nécessitait 7 fois plus d'eau que la salle bleue précédente.
+    - pour une salle verte, le nettoyage nécessitait 5 fois plus d'eau que la salle bleue précédente.
+    - pour une salle bleue, sauf la première, l'affaire était plus compliquée. 
+      Pour connaître le nombre de litres nécessaire, il fallait totaliser le nombre de litres nécessaire
+      au nettoyage de la salle rouge et de la salle verte précédentes, et ne conserver que les deux
+      derniers chiffres de ce total
+    """
+    entree = 1
+    litres = 0
+    rouge = 0
+    bleue = 2
+    verte = 0
+    while entree <= 103:
+        if entree == 1:
+            # salle bleue
+            bleue = 2
+        else:
+            bleue = int(str(rouge + verte)[-2:])
+
+        litres += bleue
+        print(f"entree {entree:>3} salle bleue {bleue:>3} litres {litres:>6}")
+        entree += 1
+        if entree > 103:
+            break
+
+        # salle rouge
+        rouge = bleue * 7
+        litres += rouge
+        print(f"entree {entree:>3} salle rouge {rouge:>4} litres {litres:>6}")
+        entree += 1
+
+         # salle verte
+        verte = bleue * 5
+        litres += verte
+        bleue = int(str(rouge + verte)[-2:])
+        print(f"entree {entree:>3} salle verte {verte:>4} litres {litres:>6}")
+        entree += 1
+
+    print(f"Résultat = {litres}")
+
+
 if __name__ == "__main__":
-    le_pistolet_de_nick_fury()
+    herculito_v_les_ecuries_d_augias()
