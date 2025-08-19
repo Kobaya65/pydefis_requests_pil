@@ -998,6 +998,7 @@ def einstein() -> None:
     
     premiers = suite_premiers(10000)
     resultats = []
+    print("Formation de la liste des résultats")
     for m in premiers:
         for c in premiers:
             if m != c:
@@ -1006,6 +1007,7 @@ def einstein() -> None:
                     resultats.append(res)
 
     resultats.sort()
+    print("Recherche des 4 numéros consécutifs")
     for x in range(0, len(resultats), 4):
         if resultats[x] == resultats[x + 1] - 2 \
             and resultats[x + 1] == resultats[x + 2] - 2 \
