@@ -962,7 +962,7 @@ def produit_et_somme_palindromiques() -> None:
 def einstein() -> None:
     """https://pydefis.callicode.fr/defis/Einstein/txt"""
     def est_premier(n: int) -> bool:
-        """Vérifie si n est un nombre premier.
+        """Check if n is a prime number.
         Args:
             n (int): number to test
         Returns:
@@ -984,7 +984,7 @@ def einstein() -> None:
     def suite_premiers(n_terms):
         """Generates the continuation of the n_terms first prime numbers.
         Args:
-            n_terms (int): number of figures
+            n_terms (int): number of figures to generate    
         Returns:
             list[int]: list of prime numbers
         """
@@ -996,7 +996,7 @@ def einstein() -> None:
             nombre += 1
         return suite
     
-    premiers = suite_premiers(50)
+    premiers = suite_premiers(10000)
     resultats = []
     for m in premiers:
         for c in premiers:
@@ -1006,7 +1006,13 @@ def einstein() -> None:
                     resultats.append(res)
 
     resultats.sort()
-    print(f"Résultat = {resultats[:4]}")
+    for x in range(0, len(resultats), 4):
+        if resultats[x] == resultats[x + 1] - 2 \
+            and resultats[x + 1] == resultats[x + 2] - 2 \
+            and resultats[x + 2] == resultats[x + 3] - 2 \
+            and resultats[x + 3] == resultats[x + 4] - 2:
+            print(f"Résultat = {resultats[x]} {resultats[x + 1]} {resultats[x + 2]} {resultats[x + 3]}")
+            break
 
 
 if __name__ == "__main__":
