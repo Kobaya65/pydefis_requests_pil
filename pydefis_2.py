@@ -380,7 +380,8 @@ def entree_au_ministere() -> None:
 
         entree += 1
 
-    print(f"Résultat = {prochains_chiffres[0]}, {prochains_chiffres[1]}, {prochains_chiffres[2]}")
+    print(
+        f"Résultat = {prochains_chiffres[0]}, {prochains_chiffres[1]}, {prochains_chiffres[2]}")
 
 
 def parametrage_du_vif_d_or() -> None:
@@ -460,7 +461,8 @@ def le_rayon_carre_des_daleks() -> None:
     """https://pydefis.callicode.fr/defis/C23_RayonCarre/txt
     20250724 : non résolu
     """
-    data = pd.read_csv(filepath_or_buffer="./le_rayon_carre_des_daleks/entree.csv", delimiter=",", names=["x", "y", "largeur","hauteur"])
+    data = pd.read_csv(filepath_or_buffer="./le_rayon_carre_des_daleks/entree.csv",
+                       delimiter=",", names=["x", "y", "largeur", "hauteur"])
 
     data.iloc[:, 0] = data.iloc[:, 0] + 1000
     data.iloc[:, 1] = data.iloc[:, 1] + 1000
@@ -474,7 +476,8 @@ def le_rayon_carre_des_daleks() -> None:
         y = rect.y - (rect.largeur / 2)
         x1 = rect.x + (rect.largeur / 2)
         y1 = rect.y + (rect.largeur / 2)
-        drawing_object.rectangle( (x, y, x1, y1), fill=(0, 255, 0), outline=None)
+        drawing_object.rectangle(
+            (x, y, x1, y1), fill=(0, 255, 0), outline=None)
 
     image.save(fp="./le_rayon_carre_des_daleks/image_vert_perso.png")
     surface = 0
@@ -526,7 +529,6 @@ def la_paranoia_de_calot() -> None:
 
         return decyphered_text
 
-
     clavier = [
         ["a", "z", "e", "r", "t", "y", "u", "i", "o", "p"],
         ["q", "s", "d", "f", "g", "h", "j", "k", "l", "m"],
@@ -535,14 +537,15 @@ def la_paranoia_de_calot() -> None:
     with open(file="./la_paranoia_de_calot/texte.txt", mode="r", encoding="utf-8") as f:
         texte = f.read()
 
-
     for i in range(-9, 10):
         print(f"i={i}")
         print(browse_text(i))
 
+
 def gestion_espace_temps_par_le_tardis() -> None:
     """https://pydefis.callicode.fr/defis/C23_TardisFirmware10/txt"""
-    img = Image.open('./gestion_espace_temps_par_le_tardis/tardis_machine_02.png')
+    img = Image.open(
+        './gestion_espace_temps_par_le_tardis/tardis_machine_02.png')
     pile = []
     nombres = []
     annee = 0
@@ -571,13 +574,13 @@ def gestion_espace_temps_par_le_tardis() -> None:
                 print("combinaison inconnue !")
 
     print(f"annee = {annee}")
-            
+
 
 def un_message_des_etoiles() -> None:
     """https://pydefis.callicode.fr/defis/C25_SkyMap01/txt"""
     my_zip_file = "./un_message_des_etoiles_1/telescope01.zip"
     destination_folder = "./un_message_des_etoiles_1"
-    
+
     with ZipFile(my_zip_file, 'r') as zip_ref:
         zip_ref.extractall(destination_folder)
 
@@ -589,7 +592,7 @@ def un_message_des_etoiles() -> None:
     lon = len(fichiers)
 
     # first image set as reference
-    image_ref = Image.open(fichiers[0]) 
+    image_ref = Image.open(fichiers[0])
     tab_ref = list(image_ref.getdata())
 
     nb_pixels_diffents = 0
@@ -700,7 +703,8 @@ def sa_legende_est_son_anagramme_2() -> None:
             }
 
     # sort dico by its values
-    dico_resultat = dict(sorted(dico_resultat.items(), key=lambda x: x[1]["nb_légendes"], reverse=True))
+    dico_resultat = dict(sorted(dico_resultat.items(),
+                         key=lambda x: x[1]["nb_légendes"], reverse=True))
 
     # first_value = next(iter(my_dict.values()))
     for x in dico_resultat:
@@ -743,13 +747,14 @@ def sw_v_joue_avec_yoda() -> None:
             except IndexError:
                 idx_init += 1
                 break
-    
+
     liste = ""
     for x in mots_tries:
         liste += f"\"{x}\", "
 
     liste = liste[:-2]
     print(liste)
+
 
 def sw_iv_il_a_mis_son_mot_de_passe_sur_un_post_it() -> None:
     """https://pydefis.callicode.fr/defis/LunetteAstro/txt"""
@@ -758,15 +763,15 @@ def sw_iv_il_a_mis_son_mot_de_passe_sur_un_post_it() -> None:
     nb_iterations = 50
 
     while nb_iterations:
-        x = (x1      + 2 * y1) % 2018
-        y = (-3 * x1 +     y1) % 2018
+        x = (x1 + 2 * y1) % 2018
+        y = (-3 * x1 + y1) % 2018
 
         x1 = x
         y1 = y
 
         nb_iterations -= 1
 
-    declinaison = (x - 900)  / 10
+    declinaison = (x - 900) / 10
     ascension_droite = (y / 150) * 2
 
     print(f"Déclinaison      : {declinaison}")
@@ -907,7 +912,7 @@ def herculito_v_les_ecuries_d_augias() -> None:
         print(f"entree {entree:>3} salle rouge {rouge:>4} litres {litres:>6}")
         entree += 1
 
-         # salle verte
+        # salle verte
         verte = bleue * 5
         litres += verte
         bleue = int(str(rouge + verte)[-2:])
@@ -927,7 +932,7 @@ def produit_et_somme_palindromiques() -> None:
         Returns:
             bool: True if both are palindrom otherwise False
         """
-        
+
         mult_rev = "".join(reversed(mult))
         somm_rev = "".join(reversed(somm))
 
@@ -954,5 +959,55 @@ def produit_et_somme_palindromiques() -> None:
     print(f"Résultat = {len(result)}")
 
 
+def einstein() -> None:
+    """https://pydefis.callicode.fr/defis/Einstein/txt"""
+    def est_premier(n: int) -> bool:
+        """Vérifie si n est un nombre premier.
+        Args:
+            n (int): number to test
+        Returns:
+            bool: True if n is a prime number else False
+        """
+        if n <= 1:
+            return False
+        if n == 2:
+            return True
+        if n % 2 == 0:
+            return False
+        # vérification jusqu'à la racine carrée de n
+        limite = int(n**0.5) + 1
+        for i in range(3, limite, 2):
+            if n % i == 0:
+                return False
+        return True
+
+    def suite_premiers(n_terms):
+        """Generates the continuation of the n_terms first prime numbers.
+        Args:
+            n_terms (int): number of figures
+        Returns:
+            list[int]: list of prime numbers
+        """
+        suite = []
+        nombre = 2  # Le premier nombre premier
+        while len(suite) < n_terms:
+            if est_premier(nombre):
+                suite.append(nombre)
+            nombre += 1
+        return suite
+    
+    premiers = suite_premiers(50)
+    resultats = []
+    for m in premiers:
+        for c in premiers:
+            if m != c:
+                res = m * c ** 2
+                if res % 2 != 0:
+                    resultats.append(res)
+
+    resultats.sort()
+    print(f"Résultat = {resultats[:4]}")
+
+
 if __name__ == "__main__":
-    produit_et_somme_palindromiques()
+    einstein()
