@@ -1,6 +1,7 @@
 """Challenges from https://pydefis.callicode.fr Part 2
 """
 import random
+from re import S
 from time import sleep
 from zipfile import ZipFile
 from glob import glob
@@ -1040,5 +1041,38 @@ def matrix() -> None:
     print(f"Résultat = {empreinte}")
 
 
+def les_nombres_heureux() -> None:
+    """https://pydefis.callicode.fr/defis/NombresHeureux/txt"""
+    def check_heureux(nombre: int) -> bool:
+        """Check if nombre is a "happy" number.
+        Args:
+            nombre (int): nomber to check
+        Returns:
+            bool: True if nombre is a "happy" number, otherwise False
+        """
+        composantes = [nombre]
+        while composantes[len(composantes) - 1] != 1:
+            str_nombre = str(nombre)
+            result = 0
+            for x in str_nombre:
+                result += int(x) ** 2
+            nombre = result
+            if nombre == 1:
+                return True
+            if nombre in composantes:
+                return False
+ 
+            composantes.append(nombre)
+
+    resultats = []
+    mini = 8962
+    maxi = 9189
+    for i in range(mini, maxi + 1):
+        if check_heureux(i):
+            resultats.append(i)
+
+    print(resultats)
+
+
 if __name__ == "__main__":
-    matrix()
+    les_nombres_heureux()
