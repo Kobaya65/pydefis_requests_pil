@@ -987,6 +987,8 @@ def einstein() -> None:
             n_terms (int): number of figures to generate    
         Returns:
             list[int]: list of prime numbers
+        
+            20250821 : non résolu
         """
         suite = []
         nombre = 2  # Le premier nombre premier
@@ -995,11 +997,12 @@ def einstein() -> None:
                 suite.append(nombre)
             nombre += 1
         return suite
-    
+
     premiers = suite_premiers(10000)
+    nb_premiers = len(premiers)
     resultats = []
-    print("Formation de la liste des résultats")
-    for m in premiers:
+    for idx, m in enumerate(iterable=premiers, start=1):
+        print(f"Formation de la liste des résultats, m = {idx}/{nb_premiers}")
         for c in premiers:
             if m != c:
                 res = m * c ** 2
@@ -1007,8 +1010,9 @@ def einstein() -> None:
                     resultats.append(res)
 
     resultats.sort()
-    print("Recherche des 4 numéros consécutifs")
+    nb_resultats = len(resultats)
     for x in range(0, len(resultats), 4):
+        print(f"Recherche des 4 numéros consécutifs, x = {x}/{nb_resultats}")
         if resultats[x] == resultats[x + 1] - 2 \
             and resultats[x + 1] == resultats[x + 2] - 2 \
             and resultats[x + 2] == resultats[x + 3] - 2 \
@@ -1016,6 +1020,25 @@ def einstein() -> None:
             print(f"Résultat = {resultats[x]} {resultats[x + 1]} {resultats[x + 2]} {resultats[x + 3]}")
             break
 
+def matrix() -> None:
+    """"https://pydefis.callicode.fr/defis/Matrix/txt"""
+    with open(file="./matrix/coding_up.txt") as f:
+        data = f.readlines()
+
+    result = []
+
+    for x in data:
+        ligne = [car for car in x[:-1]]
+        result.append(ligne)
+    
+    empreinte = 0
+    for id_ligne, ligne in enumerate(iterable=result, start=1):
+        for id_colonne, car in enumerate(iterable=ligne, start=1):
+            if car != " ":
+                empreinte += ord(car) * id_ligne * id_colonne
+
+    print(f"Résultat = {empreinte}")
+
 
 if __name__ == "__main__":
-    einstein()
+    matrix()
