@@ -1077,7 +1077,9 @@ def les_nombres_heureux() -> None:
 
 
 def robots_tueurs_de_krikket_1_2() -> None:
-    """https://pydefis.callicode.fr/defis/C25_GraphMac/txt"""
+    """https://pydefis.callicode.fr/defis/C25_GraphMac/txt
+    20250828 : non résolu
+    """
     with open(file="./robots_tueurs_de_krikket_1_2/logs.txt") as f:
         logs = f.readlines()
 
@@ -1100,7 +1102,8 @@ def robots_tueurs_de_krikket_1_2() -> None:
             macs[x] = macs[x] + ([" "] * (10 - lon))
  
     macs_pd = pd.DataFrame(data=macs)
-    macs_pd.to_excel("./robots_tueurs_de_krikket_1_2/macs.xlsx")
+    # macs_pd.to_excel("./robots_tueurs_de_krikket_1_2/macs.xlsx")
+    macs_pd.to_csv(path_or_buf="./robots_tueurs_de_krikket_1_2/macs.csv", sep=",")
 
 
 if __name__ == "__main__":
