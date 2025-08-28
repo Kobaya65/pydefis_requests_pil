@@ -988,7 +988,7 @@ def einstein() -> None:
             n_terms (int): number of figures to generate    
         Returns:
             list[int]: list of prime numbers
-        
+
             20250821 : non résolu
         """
         suite = []
@@ -1015,11 +1015,13 @@ def einstein() -> None:
     for x in range(0, len(resultats), 4):
         print(f"Recherche des 4 numéros consécutifs, x = {x}/{nb_resultats}")
         if resultats[x] == resultats[x + 1] - 2 \
-            and resultats[x + 1] == resultats[x + 2] - 2 \
-            and resultats[x + 2] == resultats[x + 3] - 2 \
-            and resultats[x + 3] == resultats[x + 4] - 2:
-            print(f"Résultat = {resultats[x]} {resultats[x + 1]} {resultats[x + 2]} {resultats[x + 3]}")
+                and resultats[x + 1] == resultats[x + 2] - 2 \
+                and resultats[x + 2] == resultats[x + 3] - 2 \
+                and resultats[x + 3] == resultats[x + 4] - 2:
+            print(
+                f"Résultat = {resultats[x]} {resultats[x + 1]} {resultats[x + 2]} {resultats[x + 3]}")
             break
+
 
 def matrix() -> None:
     """"https://pydefis.callicode.fr/defis/Matrix/txt"""
@@ -1031,7 +1033,7 @@ def matrix() -> None:
     for x in data:
         ligne = [car for car in x[:-1]]
         result.append(ligne)
-    
+
     empreinte = 0
     for id_ligne, ligne in enumerate(iterable=result, start=1):
         for id_colonne, car in enumerate(iterable=ligne, start=1):
@@ -1061,7 +1063,7 @@ def les_nombres_heureux() -> None:
                 return True
             if nombre in composantes:
                 return False
- 
+
             composantes.append(nombre)
 
     resultats = []
@@ -1074,5 +1076,32 @@ def les_nombres_heureux() -> None:
     print(resultats)
 
 
+def robots_tueurs_de_krikket_1_2() -> None:
+    """https://pydefis.callicode.fr/defis/C25_GraphMac/txt"""
+    with open(file="./robots_tueurs_de_krikket_1_2/logs.txt") as f:
+        logs = f.readlines()
+
+    macs = {}
+    for ligne in logs:
+        mac = ligne[19:36]
+        wifi = ligne[52:-2]
+        if macs.get(mac):
+            macs[mac].append(wifi)
+        else:
+            macs[mac] = [wifi]
+
+    for x in macs:
+        macs[x].sort()
+
+    # make all lists the same length
+    for x in macs:
+        lon = len(macs[x])
+        if lon < 10:
+            macs[x] = macs[x] + ([" "] * (10 - lon))
+ 
+    macs_pd = pd.DataFrame(data=macs)
+    macs_pd.to_excel("./robots_tueurs_de_krikket_1_2/macs.xlsx")
+
+
 if __name__ == "__main__":
-    les_nombres_heureux()
+    robots_tueurs_de_krikket_1_2()
