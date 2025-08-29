@@ -1,7 +1,6 @@
 """Challenges from https://pydefis.callicode.fr Part 2
 """
 import random
-from re import S
 from time import sleep
 from zipfile import ZipFile
 from glob import glob
@@ -1106,5 +1105,52 @@ def robots_tueurs_de_krikket_1_2() -> None:
     macs_pd.to_csv(path_or_buf="./robots_tueurs_de_krikket_1_2/macs.csv", sep=",")
 
 
+def lire_chiffres_romains(chiffre_romain: str) -> None:
+    """https://codex.forge.apps.education.fr/exercices/romain_decimal/
+    Prints roman figure passed as parameter and its decimal value.
+    Args:
+        chiffre_romain (str): roman figure
+    """
+    def position_valeur(valeur: str) -> int:
+        """Returns index of valeur in valeurs.
+        Args:
+            valeur (str): roman figure
+        Returns:
+            int: index of the roman figure in valeurs
+        """
+        for idx, x in enumerate(valeurs):
+            if x == valeur:
+                return idx
+
+    valeurs = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+    longueur = len(chiffre_romain)
+    valeur_decimale = 0
+    val = None
+    i = 0
+    while i < longueur:
+        pos_i = position_valeur(chiffre_romain[i])
+        if longueur > 1 and i < (longueur - 1):
+            pos_i_1 = position_valeur(chiffre_romain[i + 1])
+        else:
+            pos_i_1 = 0
+
+        if pos_i_1 > pos_i:
+            val = valeurs[chiffre_romain[i]]
+            val1 = valeurs[chiffre_romain[i + 1]]
+            valeur_decimale += (val1 - val)
+            i += 1
+        else:
+            valeur_decimale += valeurs[chiffre_romain[i]]
+
+        i += 1
+
+    print(f"{chiffre_romain} = {valeur_decimale}")
+
+
 if __name__ == "__main__":
-    robots_tueurs_de_krikket_1_2()
+    lire_chiffres_romains("I")
+    lire_chiffres_romains("XVI")
+    lire_chiffres_romains("MMXXII")
+    lire_chiffres_romains("CDII")
+    lire_chiffres_romains("XLII")
+    lire_chiffres_romains("MCMXCII")
