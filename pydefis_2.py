@@ -1107,16 +1107,16 @@ def robots_tueurs_de_krikket_1_2() -> None:
 
 def lire_chiffres_romains(chiffre_romain: str) -> None:
     """https://codex.forge.apps.education.fr/exercices/romain_decimal/
-    Prints roman figure passed as parameter and its decimal value.
+    Prints roman numerals passed as parameter and its decimal value.
     Args:
-        chiffre_romain (str): roman figure
+        chiffre_romain (str): roman numeral
     """
     def position_valeur(valeur: str) -> int:
         """Returns index of valeur in valeurs.
         Args:
-            valeur (str): roman figure
+            valeur (str): roman numeral
         Returns:
-            int: index of the roman figure in valeurs
+            int: index of the roman numeral in valeurs
         """
         for idx, x in enumerate(valeurs):
             if x == valeur:
@@ -1154,3 +1154,4 @@ if __name__ == "__main__":
     lire_chiffres_romains("CDII")
     lire_chiffres_romains("XLII")
     lire_chiffres_romains("MCMXCII")
+    lire_chiffres_romains("MCMLXV")
